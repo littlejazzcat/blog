@@ -57,4 +57,8 @@
   <i> <font color=#FF0000>如果在github创建仓库时生成了readme文档则无法直接向该远程仓库推送修改 </font> </i>(会提示：<code>[rejected] master -＞ master (fetch first)error: failed to push some refs.</code>)
  <br>
   这时要先用命令：<code>git pull --rebase origin master</code>将远程仓库的readme拉取到本地仓库。<i>这里的origin和master含义同上</i>
-  
+ <br>
+<h3 id ="3">3.在github主页面部署密钥和在仓库设置中部署的区别</h3>
+<br>
+
+<i>在 GitHub 主页面部署密钥时，该密钥将成为您的全局部署密钥。这意味着该密钥可以用于对您所有的仓库进行操作，包括克隆、推送和拉取等。而在仓库设置中部署密钥时，该密钥将仅限于对该特定库起作用。这种方式更加灵活，因为您可以为每个仓库设置不同密钥，以控制对仓库的访问权限。</i>
