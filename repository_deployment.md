@@ -62,3 +62,5 @@
 <br>
 
 <i>在 GitHub 主页面部署密钥时，该密钥将成为您的全局部署密钥。这意味着该密钥可以用于对您所有的仓库进行操作，包括克隆、推送和拉取等。而在仓库设置中部署密钥时，该密钥将仅限于对该特定库起作用。这种方式更加灵活，因为您可以为每个仓库设置不同密钥，以控制对仓库的访问权限。</i>
+
+更详细内容参考[github官方文档](https://docs.github.com/zh/migrations/importing-source-code/using-the-command-line-to-import-source-code/adding-locally-hosted-code-to-github)
