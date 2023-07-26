@@ -19,7 +19,7 @@
 
     <i>可以参考下图 </i>
 
-![获取远程仓库的URL](https://pics0.baidu.com/feed/314e251f95cad1c890509dd8d8ade005cb3d5181.jpeg?token=22753cc899217a02c1bfbdc83bb58546)
+![获取远程仓库的URL](https://img-blog.csdnimg.cn/img_convert/89beac9ca7830a15109c57edbf689a35.jpeg)
 
 - 将本地目录初始化成git可管理的仓库<br>
   在gitbash终端键入命令<code>git init</code>
@@ -49,7 +49,7 @@
   <i>关于工作区、暂存区和版本库可以参考这篇文章：[Git 工作区、暂存区和版本库](https://www.runoob.com/git/git-workspace-index-repo.html)</i>
   <br>
   (2)接着键入命令<code>git commit -m '关于改动的描述'</code>
-  将暂存区提交到版本库
+  将暂存区提交到版本库<br>
   (3)键入命令<code>git push origin master</code>
   将本地的master分支（init时默认创建的分支）推送到远程仓库<br>
   <i>origin是你想要推送的目的远程仓库主机名（在前面的添加远程仓库步骤中已经将origin和目的github仓库关联起来了），master是要推送的本地仓库分支，如果远程仓库没有该分支就会创建一个新的名为master的分支。</i> 关于git分支可以参考这篇文章：[Git分支管理](https://www.runoob.com/git/git-branch.html)<br>
@@ -61,6 +61,7 @@
 <h3 id ="3">3.在github主页面部署密钥和在仓库设置中部署的区别</h3>
 <br>
 
-<i>在 GitHub 主页面部署密钥时，该密钥将成为您的全局部署密钥。这意味着该密钥可以用于对您所有的仓库进行操作，包括克隆、推送和拉取等。而在仓库设置中部署密钥时，该密钥将仅限于对该特定库起作用。这种方式更加灵活，因为您可以为每个仓库设置不同密钥，以控制对仓库的访问权限。</i>
 
-更详细内容参考[github官方文档](https://docs.github.com/zh/migrations/importing-source-code/using-the-command-line-to-import-source-code/adding-locally-hosted-code-to-github)
+
+
+- <i>在 GitHub 主页面部署密钥时，该密钥将成为您的全局部署密钥。这意味着该密钥可以用于对你所有的仓库进行操作，包括克隆、推送和拉取等。而在仓库设置中部署密钥时，该密钥将仅限于对该特定库起作用。这种方式更加灵活，因为你可以为每个仓库设置不同密钥，以控制对仓库的访问权限。</i>
