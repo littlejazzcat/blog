@@ -3,7 +3,9 @@
 
  [ 1、BeautifulSoup库作用 ](#1) <br>
  [ 2、BeautifulSoup()方法 ](#2) <br>
- [ 3、find()、find_all()、selector()、get()方法 ](#3) <br>
+ [ 3、find()、find_all()、selector()、get()方法 ](#3) 
+ 
+ <br>
 
   
 --------
@@ -57,7 +59,7 @@
   find_all()方法搜索当前soup对象的所有tag子节点(soup对象就是由各种html节点构成的)并判断是否符合过滤器的条件：<br>
   find_all(name,attrs/class,recursive,string,**kwargs)<br>
   name参数可以查找所有标签名为name的tag
-  <br><br>
+  <br><br></i>
 
   <font color = 'coral'>
 
@@ -130,8 +132,19 @@
   需要注意的是，strip()函数返回一个新的字符串，并不会修改原始字符串。如果想要移除字符串中间的字符，可以考虑使用其他字符串处理方法，比如replace()函数或正则表达式等。
   </font></font>
   <br><br>
+  </i>
 
 - get()方法
+  <br><br>
+  <font color = 'Khaki'>
+  <i>
+  BeautifulSoup解析得到的soup对象有一个get()方法。该方法用于获取标签（HTML元素）的属性值。
+  使用get()方法时，你需要传递属性名作为参数。如果该属性存在，get()方法将返回对应的属性值；如果属性不存在，get()方法可以返回默认值（可选参数）或者None。</i>
+  </font><br><br>
+  <font color = 'red'>
+  注意区分字典、requests库和beautifulsoup库中的get方法，它们的作用分别是取键值、向网址请求获取网页资源、获取属性值。
+
+
 
 
 
