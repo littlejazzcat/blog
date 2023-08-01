@@ -1,4 +1,4 @@
-# BeautifulSoup库
+# BeautifulSoup库总结
 
 
  [ 1、BeautifulSoup库作用 ](#1) <br>
@@ -113,7 +113,7 @@
   补充：<br>
   strip()函数是用于移除字符串开头和末尾的指定字符（默认为空格）或字符序列的方法。下面是使用strip()函数的基本语法：<br><br>
   string.strip([characters])<br>
-  其中，string是要操作的字符串，characters是可选参数，用于指定要移除的字符或字符序列。
+  其中，string是要操作的字符串，characters是可选参数，用于指定要移除的字符或字符序列。</font></font>
 
   下面是一些示例：
 
