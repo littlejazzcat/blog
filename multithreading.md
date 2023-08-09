@@ -1,5 +1,5 @@
 # Python多线程
-<i>参考文章：[python多线程详解（超详细）](https://blog.csdn.net/weixin_40481076/article/details/101594705) </i>
+<i>参考文章：[python多线程详解（超详细）](https://blog.csdn.net/weixin_40481076/article/details/101594705) 、[Python线程池(thread pool)创建及使用+实例代码](https://blog.csdn.net/master_hunter/article/details/125070310?ops_request_misc=&request_id=&biz_id=102&utm_term=python%E7%BA%BF%E7%A8%8B%E6%B1%A0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduweb~default-0-125070310.142^v92^chatsearchT0_1&spm=1018.2226.3001.4187) 、[第二十章 多线程](https://www.cnblogs.com/shiruiyang/p/16828536.html)</i>
 <br>
 
 
@@ -15,7 +15,7 @@
 <h3 id = "1">1、多线程的概念</h3>
 <br>
 
-    线程也叫轻量级进程，是操作系统能够进行运算调度的最小单位，它被包涵在进程之中，是进程中的实际运作单位。线程自己不拥有系统资源，只拥有一点在运行中必不可少的资源，但它可与同属一个进程的其他线程共享进程所拥有的全部资源。一个线程可以创建和撤销另一个线程，同一个进程中的多个线程之间可以并发执行。
+线程也叫轻量级进程，是操作系统能够进行运算调度的最小单位，它被包涵在进程之中，是进程中的实际运作单位。线程自己不拥有系统资源，只拥有一点在运行中必不可少的资源，但它可与同属一个进程的其他线程共享进程所拥有的全部资源。一个线程可以创建和撤销另一个线程，同一个进程中的多个线程之间可以并发执行。
 
 <br>
 
@@ -146,6 +146,12 @@ in work1 g_num is : 200
         time.sleep(0.1)
         print('in work1 g_num is : %d' % g_num)
         lock.release() #释放锁，让其他线程可以获取到资源防止死锁。
+        #Lock()方法的使用也可以使用with语句简化如下：
+        #with lock:
+        #    global  g_num
+        #    time.sleep(0.1)
+        #    print('in work1 g_num is : %d' % g_num)
+
 
     def work2():
         global  g_num
@@ -270,3 +276,94 @@ the thread:t-10 is done<br>
 ----------all threads done----------- <br><br>
 
 （每次运行结果都不一定相同）可以发现不论怎样，同时在运行的线程都只会有5个，满了五个后只能等其中的某个结束才能加入新的线程<br><br>
+
+- 线程池  <br>
+
+线程过多会带来调度开销，进而影响缓存局部性和整体性能。而线程池维护着多个线程，等待着监督管理者分配可并发执行的任务。这避免了在处理短时间任务时创建与销毁线程的代价。线程池不仅能够保证内核的充分利用，还能防止过分调度。线程池大小应该根据可用的CPU核数、内存大小和其他系统资源进行调整。如果系统资源充足，可以增加线程池的大小。同时也要考虑程序的性质和特性，例如CPU密集型还是IO密集型。如果程序主要涉及CPU密集型任务，线程池大小可以设置得较小，以避免过多的线程竞争CPU资源。如果程序主要涉及IO密集型任务，线程池大小可以设置较大，以便同时处理更多的任务。
+
+- ThreadPoolExecutor类创建线程池<br>
+  
+'''
+
+    from concurrent.futures import ThreadPoolExecutor
+    import threading
+    #创建一个包含2条线程的线程池
+
+
+
+    def task(i):
+        sleep_seconds = 0.5    #随机睡眠时间
+        print('线程名称：%s,参数:%s,睡眠时间:%s' % (threading.current_thread().name, i, sleep_seconds))
+        time.sleep(sleep_seconds)   #定义睡眠时间
+
+    if __name__ == '__main__':
+        pool = ThreadPoolExecutor(max_workers = 2)  #定义两个线程
+        for i in range(10):    #创建十个任务
+            future1 = pool.submit(task, i)
+            #提交需要执行的程序到线程池中并返回一个future对象。Future 类主要用于获取线程任务函数的返回值。由于线程任务会在新线程中以异步方式执行，因此，线程执行的函数相当于一个 "将来完成" 的任务，所以 Python 使用 Future 来代表。
+        # 关闭线程池
+        #pool.shutdown()
+
+- map(func, *iterables, timeout=None, chunksize=1)方法<br>
+  
+除了submit，ThreadPoolExecutor还提供了map函数来添加线程，与常规的map类似，区别在于线程池的 map() 函数会为 iterables 的每个元素启动一个线程，以并发方式来执行 func 函数. 同时，使用map函数，还会自动获取返回值。
+
+'''
+
+    from concurrent.futures import ThreadPoolExecutor
+    import threading
+    import time
+
+    def fun(item):
+        print(f'this is threading-{item}\n')
+        time.sleep(0.1)
+        print(f'threading-{item} is done\n')
+
+        # 创建一个包含4条线程的线程池
+    if __name__ == '__main__':
+        with ThreadPoolExecutor(max_workers=4) as pool:
+            results = pool.map(fun, (1,2,3))
+        print('-------all threading is done---------\n')
+
+
+
+
+
+<h3 id = "3">3、多线程的优点及与多进程的关系</h3> <br>
+
+<i>引用文章：[第二十章 多线程](https://www.cnblogs.com/shiruiyang/p/16828536.html) 、[python多线程详解（超详细）](https://blog.csdn.net/weixin_40481076/article/details/101594705) </i><br>
+
+- 进程
+
+进程（Process，有时被称为重量级进程）是程序的一次执行。每个进程都有自己的地址空间、内存、数据栈以及记录运行轨迹的辅助数据，操作系统管理运行的所有进程，并为这些进程公平分配时间。进程可以通过fork和spawn操作完成其他任务。<br>
+
+因为各个进程有自己的内存空间、数据栈等，所以只能使用进程间通信（Inter Process Communication, IPC），而不能直接共享信息。<br><br>
+
+- 线程
+
+线程（Thread，有时被称为轻量级进程）跟进程有些相似，不同的是所有线程运行在同一个进程中，共享运行环境。
+
+线程有开始、顺序执行和结束3部分，有一个自己的指令指针，记录运行到什么地方。线程的运行可能被抢占（中断）或暂时被挂起（睡眠），从而让其他线程运行，这叫作让步。
+
+一个进程中的各个线程之间共享同一块数据空间，所以线程之间可以比进程之间更方便地共享数据和相互通信。
+
+线程一般是并发执行的。正是由于这种并行和数据共享的机制，使得多个任务的合作变得可能。实际上，在单CPU系统中，真正的并发并不可能，每个线程会被安排成每次只运行一小会儿，然后就把CPU让出来，让其他线程运行。在进程的整个运行过程中，每个线程都只做自己的事，需要时再跟其他线程共享运行结果。多个线程共同访问同一块数据不是完全没有危险的，由于访问数据的顺序不一样，因此有可能导致数据结果不一致的问题，这叫作竞态条件。大多数线程库都带有一系列同步原语，用于控制线程的执行和数据的访问。
+
+- 什么情况下用多线程并发执行
+
+多线程在切换中又分为I/O切换和时间切换。如果任务属于是I/O密集型，若不采用多线程，我们在进行I/O操作时，势必要等待前面一个I/O任务完成后面的I/O任务才能进行，在这个等待的过程中，CPU处于等待
+状态，这时如果采用多线程的话，刚好可以切换到进行另一个I/O任务。这样就刚好可以充分利用CPU避免CPU处于闲置状态，提高效率。
+
+但是如果多线程任务都是计算型，CPU会一直在进行工作，直到一定的时间后采取多线程时间切换的方式进行切换线程，此时CPU一直处于工作状态，此种情况下并不能提高性能，相反在切换多线程任务时，可能还会造成时间和资源的浪费，导致效能下降。这就是造成上面两种多线程结果不能的解释。
+<br><br>
+
+- GIL 全局解释器 <br>
+  
+GIL的全称是全局解释器，来源是python设计之初的考虑，为了数据安全所做的决定。某个线程想要执行，必须先拿到GIL，我们可以
+把GIL看做是“通行证”，并且在一个python进程之中，GIL只有一个。拿不到线程的通行证，并且在一个python进程中，GIL只有一个，
+拿不到通行证的线程，就不允许进入CPU执行。GIL只在cpython中才有，因为cpython调用的是c语言的原生线程，所以他不能直接操
+作cpu，而只能利用GIL保证同一时间只能有一个线程拿到数据。而在pypy和jpython中是没有GIL的python在使用多线程的时候，调用的是c语言的原生过程。
+
+  
+
+
