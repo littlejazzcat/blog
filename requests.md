@@ -1,10 +1,11 @@
-# requests库
+# requests库总结
 
 
  [ 1、requests库作用 ](#1) <br>
  [ 2、get方法 ](#2) <br>
  [ 3、post方法 ](#3) <br>
  [ 4、requests库常见抛出异常 ](#4)
+ [ 5、session()方法 ](#5)
   
 --------
 
@@ -14,7 +15,7 @@
 - requests库是一个用于发送HTTP请求的Python库。它提供了一种简单而直观的方式来与Web服务进行交互，例如在爬取网页数据、访问API或进行HTTP通信等方面。使用requests库，你可以轻松地向服务器发送GET、POST、PUT、DELETE等各种类型的请求，并获取响应结果。
 - 主要功能包括：
 
-  1、发送HTTP请求：使用requests库，你可以发送各种类型的HTTP请求，如GET、POST、PUT、DELETE等，以及定制请求头、请求参数、文件上传等功能。
+  1、发送HTTP请求：使用requests库，你可以发送各种类型的HTTP请求，如GET、POST、PUT等，以及定制请求头、请求参数、文件上传等功能。
 
   2、处理响应结果：requests库能够处理服务器返回的响应结果，包括获取响应状态码、响应头、响应正文等信息。你可以根据需要对响应结果进行解析和处理。
 
@@ -92,7 +93,39 @@
 <br><br><i>
 通过将请求代码放置在try块中，可以捕获可能抛出的Timeout异常。然后，可以根据具体情况进行适当的处理，例如打印错误信息、重试请求或执行其他操作（即当出现对应异常时就会跳过try:下的语句而去执行except:下的语句）</i>
 
+----
 
+<h3 id = "5">5、session()方法 </h3>
+
+<i> 参考文章： [Python之requests模块-session](https://blog.csdn.net/qq_42533216/article/details/121137469) </i>
+<br></i>
+
+- 基本使用方法
+
+'''
+
+    import requests
+    
+    s = requests.Session()
+    # 第一步：发送一个请求，用于设置请求中的cookies
+    # tips: http://httpbin.org能够用于测试http请求和响应
+    s.get('http://httpbin.org/cookies/set/sessioncookie/123456789')
+    # 第二步：再发送一个请求，用于查看当前请求中的cookies
+    r = s.get("http://httpbin.org/cookies")
+    print(r.text)
+
+结果如下：<br>
+
+    {
+      "cookies": {
+        "sessioncookie": "123456789"
+      }
+    }
+
+- session()的作用：
+
+1、建立会话状态：当发送请求时，会话对象会保存并发送之前请求过程中获取的cookie信息（如上面的示例程序），这样可以在后续请求中保持会话状态，避免重复登录或其他操作，同时减少服务器的压力。<br>
+2、避免频繁连接和断开：使用session()方法可以在多个请求之间维持同一个TCP连接，减少了频繁连接和断开的开销，提高了爬取速度。
  
 
 
