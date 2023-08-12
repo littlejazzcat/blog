@@ -41,7 +41,30 @@
         t1.start()   #启动t1线程
         t2.start()   #启动t2线程
 '''
-  
+
+-  重写run()方法
+
+'''
+        import threading
+
+        class MyThread(threading.Thread):
+        def __init__(self, name):
+            threading.Thread.__init__(self)
+            #这一句也可以写为：super(MyThread,self).__init__()
+            #重写run方法是为了定义线程的执行逻辑使整个程序逻辑更清晰，而调用父类的__init__方法是为了执行父类Thread类的初始化操作，确保线程对象的正确创建和初始化。
+            self.name = name
+
+        def run(self):
+            print(f"Thread '{self.name}' is running")
+
+        # 创建线程实例
+        thread = MyThread("MyThread")
+        #这一句和thread = threading.Thread(target = work,args=('MyThread',))作用类似，不过后者需要在外面构造一个作用和run方法一样的函数而前者不需要传入这个参数直接start即可。
+
+        # 启动线程
+        thread.start()
+
+
 
 - setDaemon(True)创建守护线程
 
@@ -59,7 +82,6 @@
         t.start()
         print('end')
 
-'''
 <br>
 结果如下：<br>
 task<br>
@@ -67,10 +89,10 @@ t1<br>
 end<br>
 
 这里主线程为'main'的线程，t线程为守护线程，当主线程结束时（这里打印'end'后就没有代码了）守护线程也跟着结束（print('1s')没有执行）
-<br><br>
+<br>
 
 - join()方法让主线程等待子线程执行
-  <br>
+
 
 '''
 
@@ -87,15 +109,14 @@ end<br>
         t.join()
         print('end')
 
-'''
 
-<br>
+
 结果如下：<br>
 task<br>
 t1<br>
 1s<br>
-end<br><br>
-由结果可看出即使子线程中间停止了1s，却也没有切换到主线程，而是等待子线程结束后再切换回主线程。<br><br>
+end<br>
+由结果可看出即使子线程中间停止了1s，却也没有切换到主线程，而是等待子线程结束后再切换回主线程。<br>
 
 - Lock()方法给线程上锁
   <br><br>
@@ -126,8 +147,6 @@ end<br><br>
         t1.start()  
         t2.start()
 
-
-''' <br>
 结果为：<br>
 in work2 g_num is : 200<br>
 in work1 g_num is : 200
@@ -174,8 +193,6 @@ in work1 g_num is : 200
         t1.join()
         t2.join()
 
-'''
-<br>
 结果为：<br>
 in work1 g_num is : 100<br>
 in work2 g_num is : 200<br>
@@ -221,7 +238,7 @@ in work2 g_num is : 200<br>
    Lock与RLock的区别：<br>
    ①Lock在锁定时不论是否是同一个线程在释放锁前都不能再获得锁，而RLock在锁定时同一个线程可以再获得锁（即多重上锁）<br>
    ②Lock在锁定时不属于特定线程，也就是说，Lock可以在一个线程中上锁，在另一个线程中解锁。而对于RLock来说，只有当前线程才能释放本线程上的锁
-   <br><br>
+   <br>
 
 - 用于开门的信号量semaphore(BoundedSemaphore类)<br>
   如果说互斥锁是用来给厕所门上锁让其它线程不能进来，那么信号量机制就是打开厕所门让指定数量的人进来。
