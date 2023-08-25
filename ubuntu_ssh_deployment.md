@@ -15,6 +15,9 @@
 - <code>sudo apt-get install git</code>#使用管理员权限安装git(否则会无法安装)，输入这行命令后会要求输入密码(就是开机时的那个)。提示：ubuntu的终端中输入密码不会回显，也就是说无论你输入了什么，密码后面都不会有显示，在确保自己输入完成后直接按回车就行。
 - <code>git --version </code>#查看当前git的版本号
 
+<i>安装完成后直接在终端就可以使用git命令了具体操作和windows上的gitbash基本类似</i>
+
+
 
 <h3 id = 2>2、部署ssh </h3>
 
