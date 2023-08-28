@@ -92,7 +92,7 @@
       - (1)pattern : 要匹配的正则表达式<br>
       - (2)string : 要匹配的字符串<br>
       - (3)flags : 标志位（即修饰符），用于控制正则表达式的匹配方式，比如换行匹配，是否区分大小写等。<br>
-    <br><br>
+        这里要注意一个问题，在findall中如果想要子模式或者捕获分组之类的如(the|The)、(\d)$1等要用中括号"[]"否则findall会只匹配括号内的匹配项比如: <...>(.*?)<\...>这个pattern用findall结果是不带<...>标签对的，而search()方法就不会有这个问题。
 
     <h4>search(pattern,string,flags = 0)<br></h4>
       - para:<br>
