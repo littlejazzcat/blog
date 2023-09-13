@@ -27,8 +27,9 @@ from lxml import etree<br>
 #从字符串解析HTML<br>
 html_string = \"\<html>\<body>\<h1>Hello, World!\</h1>\</body>\</html>" <br>
 html_tree = etree.HTML(html_string)<br>
+html_text = etree.tostrin(html_tree)
 <br></code>
-<font color = 'Aquamarine'>
+<font color = ''>
 HTML方法同时还具有自动修正HTML代码的功能，<br>
 比如将上面的<code>html_string= \"\<html>\<body>\<h1>Hello, World!\</h1>\</body>\</html>"
 </code> <br>
