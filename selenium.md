@@ -6,6 +6,7 @@
  [ 3、selenium执行JS代码 ](#3) <br>
  [ 4、ActionChains](#4) <br>
  [ 5、等待模块](#5)<br>
+ [ 6、boss直聘示例](#6)
  
  
 --------
@@ -169,7 +170,7 @@ Selenium 是一个用于自动化浏览器操作的工具，它可以模拟用�
     container = driver.find_element_by_id("list-container")
     print(container)
 
-###显式等待
+### 显式等待
     from selenium import webdriver
     from selenium.webdriver.support.wait import WebDriverWait
     from selenium.webdriver.support import expected_conditions as EC
@@ -188,7 +189,7 @@ Selenium 是一个用于自动化浏览器操作的工具，它可以模拟用�
 
     print(container)
 
-###显式等待模块说明：
+### 显式等待模块说明：
     #webdriverwait为显式等待方法
     from selenium.webdriver.support.wait import WebDriverWait
     #EC为条件判断方法，搭配显式等待使用
@@ -202,10 +203,55 @@ Selenium 是一个用于自动化浏览器操作的工具，它可以模拟用�
     #timeout:显式等待时间
     #poll_frequency:轮询时间间隔(调用until,until_not中的方法的时间间隔，默认为0.5秒)
     #ignore_exceptions:要忽略的的异常，可以赋值为None(有异常就中断)、[NoSuchElementException]，这意味着如果在等待期间捕获到NoSuchElementException异常，等待将继续，直到元素可见或超时。
-###webdriverwait对象有两种等待方式：until,until_not，它们的参数都一样：
-###method:在等待期间每隔一段时间(前面设置的轮询时间)调用传入的方法
-###messsage:抛出TimeoutError异常时的错误提示
+### webdriverwait对象有两种等待方式：until,until_not，它们的参数都一样：
+### method:在等待期间每隔一段时间(前面设置的轮询时间)调用传入的方法
+### messsage:抛出TimeoutError异常时的错误提示
 
-###其中method参数可传入的值为expected_conditions模块中的各种条件或者是webElement的is_display()、is_enable()、is_select()方法
-###expected_conditions模块中包含各种用于判断的条件例如presence_of_element_located，表示用于判断某个元素是否加载到dom树中
+### 其中method参数可传入的值为expected_conditions模块中的各种条件或者是webElement的is_display()、is_enable()、is_select()方法
+### expected_conditions模块中包含各种用于判断的条件例如presence_of_element_located，表示用于判断某个元素是否加载到dom树中
+```
+- boss直聘示例<h3 id = 6></h3>
+```python
+    from selenium import webdriver
+    from selenium.webdriver.support.wait import WebDriverWait
+    from selenium.webdriver.support import expected_conditions as EC
+    from selenium.webdriver.common.by import By
+    import time
+
+    '''
+    selenium使用流程：
+    1、确定浏览器驱动
+    2、确定访问网址
+    2.5、设置等待时间(如果是显式时间可以配合后面的元素查找一起设置)
+    3、查找元素、执行action_chain、执行action_chains4、、cchcho4、获取网页元素并提取数据
+    5、重复3和4直到任务完成
+
+    0、访问异常问题的解决：确定网址的有效性、ip是否可用
+    解决反爬问题：设置代理ip，设置睡眠时间，js反爬等
+    '''
+
+    driver = webdriver.Chrome()
+    driver.get("https://www.zhipin.com/?ka=header-home")
+
+    locator = (By.CLASS_NAME, 'search-hot')
+    try:
+        WebDriverWait(driver, 10).until(EC.presence_of_element_located(locator))
+        #presence_of_element_located(tuple)方法用于检测传入的  元组  对应的元素是否在dom中出现了
+    except TimeoutError as e:
+        print(e)
+
+    btn = driver.find_elements(By.CSS_SELECTOR,'div.search-hot > a:nth-child(2)')[0]
+    #通过css选择器查找对应的元素，返回的是一个可以执行js的对象
+
+    btn.click()  # 打开一个新选项卡窗口
+
+    all_handles = driver.window_handles  # 获取所有窗口句柄
+
+    driver.switch_to.window(all_handles[0])  # 切换到首页句柄
+    time.sleep(2)
+    js = "alert('提示弹窗')"  # js 代码
+    driver.execute_script(js)  # 执行JS
+    alt = driver.switch_to.alert  # 捕获网页弹窗
+    print(alt.text)  # 打印弹窗文本
+    time.sleep(2)
 ```
